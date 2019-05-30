@@ -22,6 +22,12 @@ public class RotateCamera : MonoBehaviour
         yaw += speedH * Input.GetAxis("Mouse X") * Time.deltaTime;
         pitch -= speedV * Input.GetAxis("Mouse Y") * Time.deltaTime;
 
+        if (pitch > 90) pitch = 90;
+        else if (pitch < -90) pitch = -90;
+
+        if (yaw > 90) yaw = 90;
+        else if (yaw < -90) yaw = -90;
+
         transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
     }
 }
