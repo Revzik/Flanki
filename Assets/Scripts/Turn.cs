@@ -2,51 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class Turn : MonoBehaviour
 {
     public Token token;
-    public Transform playerCamera;
-    public Transform team1;
-    public Transform team2;
+    public Transform player;
+    public Can can;
 
-    private bool finished = false;
-    private int curT1 = 0;
-    private int cntT1;
-    private int curT2 = 0;
-    private int cntT2;
-    private bool playerTurn = true;
-
-
+    // Start is called before the first frame update
     void Start()
     {
-        cntT1 = team1.childCount;
-        cntT2 = team2.childCount;
+        
+    }
 
-        Token.OnTimeOut += next;
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 
     public void next()
     {
-        if (playerTurn) {
-            playerTurn = false;
-            token.playerTurn = false;
-            token.opponent = team2.GetChild(curT2).transform;
-            curT1++;
-            if (curT1 >= cntT1) {
-                curT1 = 0;
-            }
-        }
-        else {
-            playerTurn = true;
-            token.playerTurn = true;
-            curT2++;
-            if (curT2 >= cntT2) {
-                curT2 = 0;
-            }
-        }
+        token.reset();
 
-        playerCamera.position = new Vector3(team1.GetChild(curT1).transform.position.x, 2.0f, -6.0f);
-        playerCamera.eulerAngles = new Vector3(10.0f, 0.0f, 0.0f);
+        can.reset();
+
+        player.position = new Vector3(0.0f, 4.0f, -8.5f);
+        player.eulerAngles = new Vector3(20.0f, 0.0f, 0.0f);
     }
 }

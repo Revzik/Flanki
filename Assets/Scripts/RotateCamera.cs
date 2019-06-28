@@ -12,9 +12,8 @@ public class RotateCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        reset();
-
-        Token.OnTimeOut += reset;
+        pitch = transform.eulerAngles.x;
+        yaw = transform.eulerAngles.y;
     }
 
     // Update is called once per frame
@@ -30,10 +29,5 @@ public class RotateCamera : MonoBehaviour
         else if (yaw < -90) yaw = -90;
 
         transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
-    }
-
-    void reset() {
-        pitch = 0;
-        yaw = 0;
     }
 }

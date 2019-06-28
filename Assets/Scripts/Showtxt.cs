@@ -5,22 +5,34 @@ using UnityEngine.UI;
 
 public class Showtxt : MonoBehaviour
 {
+
+    public Transform can;
+    public Transform token;
     public Text t1;
+    private Vector3 pos_can;
+    private Vector3 pos_token;
 
     void Start()
     {
         t1.text = "";
-
-        Can.OnTopple += showText;
-        Token.OnTimeOut += reset;
     }
 
-    void showText()
+    void Update()
     {
-        t1.text = "Trafiles!";
-    }
+        pos_can.y = can.position.y;
+        pos_token.z = token.position.z;
 
-    public void reset() {
-        t1.text = "";
+        if (pos_can.y > 0.25 && pos_token.z >= 1)
+        {
+            t1.text = "Pudlo...";
+        }
+        else if (pos_can.y > 0.25 && pos_token.z < 1)
+        {
+            t1.text = "";
+        }
+        else
+        {
+            t1.text = "Trafiles!";
+        }
     }
 }
