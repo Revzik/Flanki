@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoveSpejson : MonoBehaviour
 {
-
+    public Turn turn;
     public Transform can;
     public Transform spejson;
     private Vector3 can_pos;
@@ -13,6 +13,7 @@ public class MoveSpejson : MonoBehaviour
     private float can_pos_y;
     private float can_pos_z;
     private float spejson_pos_z;
+    private bool back = false;
 
     // Start is called before the first frame update
     void Start()
@@ -31,8 +32,9 @@ public class MoveSpejson : MonoBehaviour
         can_pos_z = can.position.z;
         spejson_pos_z = spejson.position.z;
 
-        if (can_pos_y <= 0.25f)
+        if (can_pos_y <= 0.25f && turn.getCurT2() == 1 && turn.getPlayerTurn())
         {
+            back = false;
             if (spejson_pos_z > can_pos_z + 0.5f)
             {
                 GetComponent<Animator>().SetBool("spejson_forward", true);
@@ -59,6 +61,11 @@ public class MoveSpejson : MonoBehaviour
                 GetComponent<Animator>().SetBool("spejson_back", false);
                 GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
                 spejson.position = spejson_pos;
+                
+                if (!back) {
+                    back = true;
+                    Token.resetAll();
+                }
             }
         }
     }

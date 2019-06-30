@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MoveWalo : MonoBehaviour
 {
+    public Turn turn;
     public Transform can;
     public Transform walo;
     private Vector3 can_pos;
@@ -12,6 +13,7 @@ public class MoveWalo : MonoBehaviour
     private float can_pos_y;
     private float can_pos_z;
     private float walo_pos_z;
+    private bool back = false;
 
     // Start is called before the first frame update
     void Start()
@@ -30,8 +32,9 @@ public class MoveWalo : MonoBehaviour
         can_pos_z = can.position.z;
         walo_pos_z = walo.position.z;
 
-        if (can_pos_y <= 0.25f)
+        if (can_pos_y <= 0.25f && turn.getCurT2() == 2 && turn.getPlayerTurn())
         {
+            back = false;
             if (walo_pos_z > can_pos_z + 0.5f)
             {
                 GetComponent<Animator>().SetBool("walo_forward", true);
@@ -58,6 +61,11 @@ public class MoveWalo : MonoBehaviour
                 GetComponent<Animator>().SetBool("walo_back", false);
                 GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
                 walo.position = walo_pos;
+                
+                if (!back) {
+                    back = true;
+                    Token.resetAll();
+                }
             }
         }
     }

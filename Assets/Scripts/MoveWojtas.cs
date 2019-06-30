@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MoveWojtas : MonoBehaviour
 {
+    public Turn turn;
     public Transform can;
     public Transform wojtas;
     private Vector3 can_pos;
@@ -12,6 +13,7 @@ public class MoveWojtas : MonoBehaviour
     private float can_pos_y;
     private float can_pos_z;
     private float wojtas_pos_z;
+    private bool back = true;
 
     // Start is called before the first frame update
     void Start()
@@ -30,8 +32,9 @@ public class MoveWojtas : MonoBehaviour
         can_pos_z = can.position.z;
         wojtas_pos_z = wojtas.position.z;
 
-        if (can_pos_y <= 0.25f)
+        if (can_pos_y <= 0.25f && turn.getCurT2() == 0 && turn.getPlayerTurn())
         {
+            back = false;
             if (wojtas_pos_z > can_pos_z + 0.5f)
             {
                 GetComponent<Animator>().SetBool("wojtas_forward", true);
@@ -58,6 +61,11 @@ public class MoveWojtas : MonoBehaviour
                 GetComponent<Animator>().SetBool("wojtas_back", false);
                 GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
                 wojtas.position = wojtas_pos;
+                
+                if (!back) {
+                    back = true;
+                    Token.resetAll();
+                }
             }
         }
     }
